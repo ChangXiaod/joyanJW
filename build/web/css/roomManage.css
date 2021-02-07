@@ -1,0 +1,154 @@
+body{
+    background: #F0F0F0;
+    height: 780px;
+    padding-top: 33px;
+    overflow: hidden;
+    width: 100%;
+}
+
+main{
+    float: left;
+    width: 1340px;
+    height: 724px;
+    margin-left: 1%;
+    position: relative;
+    margin-top: -16px;
+}
+
+.search{
+    width: 50%;
+    height: 64px;
+    position: absolute;
+    left: 0;top: 0;
+    display: flex;
+}
+
+.room{
+    width: 70%;
+    height: 37px !important;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    color: rgba(0, 0, 0, 0.64);
+    padding-left: 15px;
+    font-size: 14px;
+}
+
+.inquiry{
+    display: block;
+    width: 85px;
+    height: 37px;
+    background: #F58515;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 37px;
+    word-spacing: 5px;
+    margin-left: -2px;
+}
+
+.add{
+    width: 85px;
+    height: 35px;
+    position: absolute;
+    right: 40px;
+    top: 0;
+    text-align: center;
+    line-height: 35px;
+    background: #F58515;
+    font-size: 20px;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #FFFFFF;
+    cursor: pointer;
+
+}
+
+/*.pagination-info {
+    font-size: 18px !important;
+}*/
+
+.mytable{
+    width: 95%;
+    min-height: 105px;
+    margin-top: 54px;
+}
+
+table{    
+    border: 1px solid #E7E8E9;
+}
+
+.th-inner{
+    height: 63px !important;
+    background: #F0F7FF !important;
+    font-size: 20px !important;
+    font-family: Microsoft YaHei !important;
+    font-weight:600 !important;
+    color: #19519C !important;
+}
+
+.fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner{
+    line-height: 50px;
+}
+
+.table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th{
+    background: #FFFFFF;
+}
+
+.table-striped tbody>tr:nth-child(even)>td, .table-striped tbody>tr:nth-child(even)>th{
+    background: #FFFFFF;
+}
+
+.bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+    height: 44px !important;
+    font-size: 16px;
+    font-family: Microsoft YaHei;
+    font-weight: 300;
+    color: #000000;
+    background: #FFFFFF;
+}
+
+.table tbody tr td,.table tbody tr th{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.xg,.del{
+    width: 62px;
+    height: 27px;
+    text-align: center;
+    font-size: 12px;
+    font-family: Microsoft YaHei;
+    font-weight: 300;
+    color: #FFFFFF;
+    line-height: 15px;
+}
+
+.xg{ 
+    background: #479CF2;
+    margin-right: 32px;
+}
+
+.del{   
+    background: #DA251D;
+}
+
+
+.xg,.del{
+     outline: none !important;
+     /* box-shadow: none !important; */
+ }
+
+
+.btn:hover, .btn:focus, .btn:active, .btn:visited {
+    color: #FFFFFF;
+}
+
+.xg:hover, .xg:focus, .xg:active, .xg.active, .xg.disabled, .xg[disabled] {
+    background: #479CF2;
+}
+
+.del:hover, .del:focus, .del:active, .del.active, .del.disabled, .del[disabled] {
+    background: #DA251D;
+}

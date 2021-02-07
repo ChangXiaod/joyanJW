@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="media/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="media/css/bootstrap-table.css">
+        <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/jquery-confirm.min.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/style2.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-select.css">
+        
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/bandManage.css">
+        <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table-zh-CN.js"></script>
+        
+        <script src="media/js/myjs.js" type="text/javascript"></script>
+        <script src="media/js/app.js"></script>
+        <script src="media/js/jquery-confirm.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-select.js"></script>
+        <script src="media/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="media/js/bootstrap-datetimepicker.zh-CN.js"></script>
+        <title>用户管理</title>
+    </head>
+    <body>
+        <main>
+            <div class="search">
+                <div class="time_box">
+                        从&nbsp;<input type="text" readonly placeholder="点击选择开始时间" value="" class="form_datetime form-control begin_date begin_time">
+                        &nbsp;至&nbsp;<input type="text" readonly placeholder="点击选择结束时间" value="" class="form_datetime form-control end_date end_time">
+                </div>
+                <input type="text" placeholder="请输入用户名称" class="room form-control" id="key">
+                <label class="inquiry" onclick="searchByKey()" style="cursor: pointer;"><img src="img/fdj.png" alt=""> 搜索</label>
+            </div>
+
+            <div class="container mytable">
+                <div class="row"  style="margin-left: -4%;width: 105%">
+                    <table id="data_list" class="table table-striped table-bordered table-hover table-full-width"></table>
+                </div>
+            </div>
+
+        </main>
+        <!-- /.modal -->
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal33" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"  style="background-color: #19519C;height:54px;padding-top: 16px;">
+                            <h4 class="modal-title" id="myModalLabel" style="font-size: 18px;color: #FFFFFF">确认删除该职位？</h4>
+                    </div>
+                    <div class="modal-footer" style="height:54px;margin-top: -1px;padding-top: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="submit()" style="margin-right: 10px;">确认</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 模态框（Modal） 新增角色-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                   <div class="modal-header" style="background-color: #19519C;height: 54px;padding-top: 16px;">
+                        <h4 class="modal-title" id="myModalLabel" style="font-size: 18px;color: #FFFFFF">用户信息</h4>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        </thead>
+                        <tbody id="table-area">
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form" style="width:90%;">
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 29px;font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">账 号：</label>
+                                    <div class="col-sm-10"><input id='userName'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 29px;font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">姓 名：</label>
+                                    <div class="col-sm-10"><input id='realName'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 3px;font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">服 务 号：</label>
+                                    <div class="col-sm-10"><input id='service_number'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">操作时间：</label>
+                                    <div class="col-sm-10"><input id='operation_time'  type='text' style="width: 180px !important;;height: 35px;margin-bottom: 10px;background-color: #FFFFFF;" readonly placeholder="点击选择领用时间" class="form_datetime form-control begin_date begin_time" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">操作结果：</label>
+                                    <div class="col-sm-10"><input id='operation_result' name="职务" type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer" style="height:54px;margin-top: -51px;padding-top: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="submit()"  style="margin-right: 10px;">确认</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  style="">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="tip_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="false"></button>
+                        <h4 class="modal-title" >提示</h4>
+                        <span id="tip_msg"></span>
+                    </div>
+                    <!--<div class="modal-body"><span id="tip_msg"></span></div>-->   
+                    <div style="background:white; float: right; margin-right: 10px;"><a class="btn btn-default" onclick="javascript:$('#tip_dialog').modal('hide');">确定</a></div>
+                </div>
+            </div>
+        </div>
+        <script>
+            
+            var utils = {
+            bindTimePicker: function ($controls, opt) {
+            $controls.each(function (i, e) {
+            var $control = $(e),
+            options = $.extend({
+            language:  'zh-CN',
+            autoclose: true,
+            format: "yyyy-mm-dd hh:ii:ss",
+            minuteStep:1
+            }, opt);
+            $control.datetimepicker(options);
+            });
+            },
+            }
+            utils.bindTimePicker($(".begin_time, .end_time"), {format: "yyyy-mm-dd hh:ii:ss"});
+            $(".begin_time").datetimepicker().on("changeDate", refreshDate);
+            var refreshDate = function () {
+            var start = $(".begin_time").val();
+            $(".end_time").datetimepicker("setStartDate", start);
+            };
+
+            var edit_id;
+            var action;
+            $(function () {
+                initTable();
+            });
+            //初始化表格
+            function initTable() {
+                $('#data_list').bootstrapTable('removeAll');
+                $('#data_list').bootstrapTable({
+                    locale: 'zh-CN',
+                    pagination: true, //分页功能
+                    pageNumber: 1, //初始页面
+                    pageSize: 12, //每页行数
+                    pageList: [12],
+                    smartDisplay: true,
+                    clickToSelect: true, //是否启用点击选中行
+                    sidePagination: "server", //后台分页
+                    method: 'get',
+                    url: 'QueryDataServlet',
+                    dataField: 'data',
+                    queryParams: queryParams, //传给后台的查询参数
+                    responseHandler: responseHandler, //查询成功后执行方法
+                    columns: [
+                        {
+                            title: '序号', //标题  可不加  
+                            align: 'center',
+                            formatter: function (value, row, index) {
+                                return index + 1;
+                            }
+                        }, {title: '账号',
+                            align: 'center',
+                            field: 'userName'},
+                        {title: '姓名',
+                            align: 'center',
+                            field: 'realName'},
+                        {title: '服务号',
+                            align: 'center',
+                            field: 'service_number'},
+                        {title: '操作时间',
+                            align: 'center',
+                            field: 'operation_time'},
+                        {title: '操作结果',
+                            align: 'center',
+                            field: 'operation_result'}]
+                });
+            }
+
+            //请求成功方法
+            function responseHandler(mdata) {
+                var errcode = mdata.code;//在此做了错误代码的判断
+                //                alert(JSON.stringify(mdata));
+                if (errcode != 0) {
+                    $.alert({
+                        title: '告警',
+                        content: "对不起，获取数据失败！",
+                    });
+                    return;
+                }
+
+                sessionStorage.items = JSON.stringify(mdata.result.data);
+                //如果没有错误则返回数据，渲染表格
+                return {
+                    total: mdata.result.total, //总页数,前面的key必须为"total"
+                    data: mdata.result.data //行数据，前面的key要与之前设置的dataField的值一致.
+                };
+            }
+
+            //根据关键字查询
+            function searchByKey() {
+                $('#data_list').bootstrapTable('removeAll');
+                $('#data_list').bootstrapTable("refresh");
+            }
+            //请求服务数据时所传参数
+            function queryParams(params) {
+                //获取查询关键字
+                var key = document.getElementById("key").value;
+                if (key != "" && key != undefined && key != null) {
+                    key = key.trim();
+                }
+                //返回查询参数
+                return{
+                    //每页多少条数据
+                    rows: params.limit,
+                    //请求第几页
+                    page: params.pageNumber,
+                    sid: "get_audit",
+                    
+                    order: "id",
+                    desc: "true",
+                    key: key
+                }
+            }
+
+            //编辑指定职位
+            function edit(id) {
+                action = 1;
+                edit_id = id;
+                var item = {};
+                console.info(sessionStorage.items);
+                var items = JSON.parse(sessionStorage.items);
+                var i = 0;
+                for (; i < items.length; i++) {
+                    if (id == items[i].id) {
+                        item = items[i];
+                        console.info(item);
+                        //给所有输入控件赋值
+                        $('#userName').val(item.userName);
+                        $('#realName').val(item.realName);
+                        $('#service_number').val(item.service_number);
+                        $('#operation_time').val(item.operation_time);
+                        $('#operation_result').val(item.operation_result);
+                    }
+                }
+                $('#myModal').modal('show');
+            }
+            //删除指定职位
+            function del(id) {
+                action = 2;
+                edit_id = id;
+                $('#myModal33').modal('show');
+            }
+
+            //增加指定职位
+            function add() {
+                action = 0;
+                $('#myModal').modal('show');
+            }
+
+            //增加或修改职位信息
+            function submit() {
+                var item = {};
+                var params = {};
+                var url = "";
+                if (action == 0) {
+                    params.sid = "add_audit";
+                    url = "AddDataServlet";
+                } else if (action == 1) {
+                    params.sid = "update_audit";
+                    params.condition = "id = " + edit_id;
+                    url = "UpdateDataServlet";
+                } else {
+                    //删除操作
+                    params.sid = "delete_audit";
+                    params.condition = "id = " + edit_id;
+                    url = "DeleteDataServlet";
+                    //隐藏删除确认对话框 
+                    $('#myModal33').modal('hide');
+                }
+                //获取参数;如果是删除动作，不用获取参数
+                if (action < 2) {
+//                    item.roleName = $("#roleName").val();
+//                    item.ip = $('#ip').val();
+//                    item.description = $("#description").val();
+//                    if (item.roleName == "" || item.roleName == undefined) {
+//                        $.alert({
+//                            title: '提示!',
+//                            content: "对不起，职位名称不能为空！"
+//                        });
+//                        return;
+//                    }
+//                    params.data = JSON.stringify(item);
+                }
+
+                item.userName=$("#userName").val();
+                item.realName=$("#realName").val();
+                item.service_number=$("#service_number").val();
+                item.operation_time=$("#operation_time").val();
+                item.operation_result=$("#operation_result").val();            
+                params.data = JSON.stringify(item);
+                
+                //调用服务器端的数据操作服务，进行新增，修改及删除动作
+                $.post(url, params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        //成功
+                        showTip(data.info);
+                        $('#myModal').modal('hide');
+                        //刷新表格数据
+                        $('#data_list').bootstrapTable("removeAll");
+                        $('#data_list').bootstrapTable("refresh");
+                    } else {
+                        showTip(data.info);
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

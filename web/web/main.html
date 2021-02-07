@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/top.css">
+        
+        <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="media/js/app.js" type="text/javascript"></script>    
+        <script src="media/js/myjs.js" type="text/javascript"></script>
+        <script src="media/js/jquery-confirm.min.js" type="text/javascript"></script>
+        <script src="media/layer/layer.js" type="text/javascript"></script>
+        <title>重要岗位值班员体征监测预警系统</title>
+    </head>
+    <body>
+        <header>
+            <img src="img/hq.png" alt="" class="hq">
+            <span>重 要 岗 位 值 班 员 体 征 监 测 预 警 系 统</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+            <dl>
+<!--                <dt id = 'show_account'>张建国</dt>
+                <dd id = 'show_post'>西安市公安局局长</dd>-->
+            </dl>
+            <div class="time" id='current_time'></div>
+            <div class="abort">
+                <img src="img/withdraw.png" alt="" class="fl" style="margin-right: 5px"> <a href='javascript:logout();' class="goback">安全退出</a>
+            </div>
+            <ul id='menu_list'>
+            </ul>
+        </header>
+        <main>
+            <iframe src="dailyMonitor.html?2" class="if-bottom" frameborder="0" name="content" id="content"  style="height: 880px;"></iframe>
+        </main>
+        <iframe src="bottom.html" class="if-bottom" frameborder="0"></iframe>
+        <script type="text/javascript">
+            $("ul").on("click","li a",function(e){
+		for(let i=0;i<$("li a").length;i++){
+			$("li a").removeClass("newColor");
+		}
+		$(e.target).addClass("newColor");
+            })
+            
+            var global_menu = new HashMap();
+            $(function () {
+                //显示登录信息
+                $.post("QuerySessionServlet", null, function (data) {
+//                    alert(data);
+                    var mdata = JSON.parse(data);
+                    if (mdata.code == 0) {
+                        sessionStorage.setItem("session_key", mdata.session.userName);
+                        sessionStorage.setItem("name", mdata.session.name);
+                        sessionStorage.setItem("login_depart", mdata.session.departSID);
+                        sessionStorage.setItem("org_name", mdata.session.org_name);
+                        sessionStorage.setItem("login_account", mdata.session.userName);
+                        sessionStorage.setItem("realName", mdata.session.realName);
+//                        sessionStorage.setItem("createTime", mdata.obj.createTime);
+                        sessionStorage.setItem("role_id", mdata.session.roleIDS);
+                        $('#show_account').text(mdata.session.realName);
+                        $('#show_post').text(mdata.session.org_name);
+                        //调整页面高度
+                        document.getElementById("content").style.height = (window.innerHeight * 0.805) + 'px';
+                        //显示当前日期
+                        $('#current_time').text(get_current_day());
+                        $("#content").scrollTop(window.innerHeight);
+                        //根据用户权限，初始化左侧的导航菜单
+                        initMenu();
+                    } else {
+                        $.alert({
+                            title: '提示!',
+                            content: "对不起，会话失效，请重新登录！",
+                        });
+                        //转跳到登录页面
+                        location.href = "index.html";
+                    }
+                });
+            });
+
+            //初始化菜单
+            function initMenu() {
+                var params = {};
+                //默认为第一个职位
+                var roles = sessionStorage.getItem("role_id");//获得保存的职位信息
+                if (roles != null && roles != undefined && roles != "") {
+                    //加载对应权限的菜单
+                    params.role_id = roles;
+                    //params.condition="id in(13,14)"
+                } else {
+                    //如果没有职位定义，则返回
+                    return;
+                }
+
+                //调用查询服务  查询这个ID下应该显示什么菜单
+                $.post("QueryMenu", params, function (mdata) {
+                    console.info(mdata);
+//                    mdata这个职位下应该显示的菜单
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        //默认加载第一个职位
+                        var items = JSON.parse(data.result[0].resource);
+//                        alert(JSON.stringify(items));
+                        updateMenu(items);//更新顶部菜单
+                    }
+                });
+            }
+
+            //更新菜单
+            function updateMenu(items) {
+                if (items != null && items != undefined) {
+                    //动态添加菜单
+                    var menu_html = "";
+                    var i = 0;
+                    //全局变量，暂时保存重新归并后的菜单项
+                    var menu_hash = resortMenu(items);
+                    for (; i < items.length; i++) {
+                        //单个node
+                        var item = items[i];
+                        //判断node的类型，如果是一级菜单，直接生成菜单
+                        if (item.parentid == '0') {
+                            menu_html += "<li class=\"\">\n\
+                                             <a href=\"" + (item.url == "" ? "" : item.url + "?" + item.id) + "\" target=\"content\" \n\
+                                             style=\"color:white;font-size:10pt;\" onclick=\"saveMenu('" + item.name + "','" + item.name + "')\">" + item.name + "</a></li>";
+
+                        }
+                    }
+                    document.getElementById("menu_list").innerHTML = menu_html;
+                }
+            }
+
+            //显示当前位置
+            function saveMenu(item_name, sub_name) {
+                //参数非空检查 
+                if (item_name == undefined || sub_name == undefined) {
+                    return true;
+                }
+                //显示目前的导航路径
+                if (item_name == sub_name) {
+                    $("#path").text(item_name);
+                } else {
+                    $("#path").text(item_name + "/" + sub_name);
+                }
+                return true;
+            }
+
+            //对菜单数据进行归并处理
+            function resortMenu(items) {
+                if (items != null && items != undefined) {
+                    var i = 0;
+                    //归并的主要目的是将菜单和子菜单集中到一起
+                    var menu_hash = new HashMap();
+                    for (; i < items.length; i++) {
+                        var item = items[i];
+                        if (item.parentid == 0) {//第一级菜单
+                            menu_hash.put(item.id, item);
+                        } else {
+                            var menu = menu_hash.get(item.parentid);
+                            if (menu != null && menu != undefined) {
+                                //如果已经存在子菜单，就将这个子菜单添加进去
+                                if (menu.submenu != null && menu.submenu != undefined) {
+                                    menu.submenu.push(item);
+                                } else {//如果还没有子菜单，就新建一个子菜单数组
+                                    var submenu = [];
+                                    submenu.push(item);
+                                    menu.submenu = submenu;
+                                }
+                            }
+                        }
+                    }
+                }
+                //返回归并后的菜单
+                return menu_hash;
+            }
+
+            function logout() {
+                $.post('Logout', function (data) {
+
+                    if (data == "success") {
+                        location.href = "index.html";
+                    } else {
+                        alert("网络连接失败，请重新退出！");
+                    }
+                });
+            }
+
+            function openWin(myId, myTitle, url) {
+                //多窗口模式，层叠置顶
+                var perContent = layer.open({
+                    type: 2, //此处以iframe举例
+                    id: myId,
+                    title: myTitle,
+                    maxmin: true,
+                    area: ['1300px', '450px'],
+                    shade: 0,
+                    skin: 'layer_bg', //加上边框
+                    offset: [//为了演示，随机坐标
+                        Math.random() * 30
+                                , Math.random() * 60
+                    ],
+                    maxmin: false,
+                            closeBtn: 1,
+                    cancel: function (index, layero) {
+                        var res = $(layero).find('iframe')[0].contentWindow.close_assay_modal();
+                        if (res === 0) {
+                            if (typeof list_refresh === 'function') {
+                                list_refresh();
+                            }
+                            layer.close(index);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    },
+                    content: url,
+                    scrollbar: false,
+                    zIndex: layer.zIndex, //重点1
+                    success: function (layero, index) {
+                        layer.setTop(layero); //重点2
+                    }
+                });
+                //最大化监控画面
+                layer.full(perContent);
+            }
+        </script> 
+    </body>
+</html>

@@ -1,0 +1,31 @@
+.bottom{
+height: 126px;
+background: #19519C;
+}
+
+.pic{
+    margin-left: 643px;margin-top: 30px;float: left;
+}
+
+.right{
+    width: 600px;
+height: 88px;
+float: left;
+margin-left: 63px;
+padding-top:38px ;
+}
+
+.right em{
+font-size: 20px;
+font-family: PingFang SC;
+font-weight: 500;
+color: #FFFFFF;
+}
+
+.right p{
+font-size: 16px;
+font-family: PingFang SC;
+font-weight: 500;
+color: #FFFFFF;
+margin-top: 10px;
+}

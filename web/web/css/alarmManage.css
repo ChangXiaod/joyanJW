@@ -1,0 +1,263 @@
+body{
+    background: #F0F0F0;
+    height: 780px;
+    padding-top: 33px;
+    overflow: hidden;
+    width: 100%;
+}
+
+input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly]{
+    cursor:pointer;
+}
+
+.leftpage{
+    width: 16%;
+    height: 724px;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    margin-left: 100px;
+    position: relative;
+    float: left;
+}
+
+.place{
+    width: 205px;
+    height: 14px;
+    font-size: 14px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #000000;
+    position: absolute;
+    top: 26px;left: 13px;
+}
+
+.leftpage ul{
+    display: flex;
+    background: #FFFFFF !important;
+}
+
+.breadcrumb > li + li:before {
+    color: #000000 !important;
+    content: ">";
+    padding: 0 5px;
+}
+
+.title{
+    position: absolute;
+    top: 89px;left: 52px;
+    word-spacing: 5px;
+    font-size: 18px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #196AA9;
+    background: url(../img/rightArrow3.png) no-repeat 0px 10px;
+    padding-left: 18px;
+}
+
+.line{
+    width: 227px;
+    height: 1px;
+    background: #FE5000;
+    position: absolute;
+    top: 118px;left: 41px;
+}
+
+.find,.find1,.find2,.find3,.find4{
+    display: block;
+    width: 205px;
+    height: 34px;    
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    padding-left: 56px;
+    line-height: 34px;
+    position: absolute;
+    left: 52px;
+    cursor: pointer;
+    background: #E4E4E4 url(../img/rightArrow2.png) no-repeat 160px 10px;
+    color: #000000;
+}
+
+a:hover, a:focus{
+    text-decoration: none;
+    color: #000000;
+}
+
+.find{
+    top: 130px;
+    word-spacing: 33px;
+}
+
+.find1{
+    top: 173px;
+    word-spacing: 33px;
+}
+
+.find2{
+    top: 216px;
+    word-spacing: 33px;
+}
+
+.find3{
+    top: 259px;
+    word-spacing: 33px;
+}
+
+.find4{
+    top: 303px;
+    word-spacing: 33px;
+}
+
+.rightpage{
+    float: left;
+    width: 1340px;
+    height: 724px;
+    margin-left: 1%;
+    position: relative;
+    margin-top: -16px;
+}
+
+.time_box{
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin-top: -27px;
+    
+}
+
+.begin_date,.end_date{
+    height: 37px !important;
+    width: 157px !important;
+}
+
+.search{
+    width: 55%;
+    height: 64px;
+    position: absolute;
+    left: 0;top: 0;
+    display: flex;
+}
+
+
+.room{
+    width: 272px;
+    margin-left: 10px;
+    height: 37px !important;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    color: rgba(0, 0, 0, 0.64);
+    padding-left: 15px;
+}
+
+.inquiry{
+    display: block;
+    width: 85px;
+    height: 37px;
+    background: #F58515;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 37px;
+    word-spacing: 5px;
+    margin-left: -2px;
+}
+
+/*.warn{
+    width: 44%;
+    height: 51px;
+    background: #DA251D;
+    opacity: 0.1;
+    position:absolute;
+    top: -17px;right: 0;
+}
+
+.newbox{
+    display: flex;
+    align-items: center;
+    width: 44%;
+    height: 51px;
+    position:absolute;
+    top: -17px;right: 0;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 400;
+    color: #000000;
+}
+
+.newbox img{
+    width: 27px;
+    height: 25px;
+    margin-right: 10px;
+    margin-left: 5px;
+}*/
+
+.mytable{
+    width: 95%;
+    min-height: 105px;
+    margin-top: 54px;
+}
+
+table{    
+    border: 1px solid #E7E8E9;
+}
+
+.th-inner{
+    height: 63px !important;
+    background: #F0F7FF !important;
+    font-size: 20px !important;
+    font-family: Microsoft YaHei !important;
+    font-weight:600 !important;
+    color: #19519C !important;
+}
+
+.fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner{
+    line-height: 50px;
+}
+
+.table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th{
+    background: #FFFFFF;
+}
+
+.table-striped tbody>tr:nth-child(even)>td, .table-striped tbody>tr:nth-child(even)>th{
+    background: #FFFFFF;
+}
+
+.bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+    height: 44px !important;
+    font-size: 16px;
+    font-family: Microsoft YaHei;
+    font-weight: 300;
+    color: #000000;
+    background: #FFFFFF;
+}
+
+.table tbody tr td,.table tbody tr th{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.btnbar{
+    width: 380px;
+    height: 38px;
+    background: #FFFFFF;
+    position: absolute;
+    right:123px ;bottom:5px;
+    padding-top: 2px;
+    padding-left: 10px !important;
+    line-height: 40px;
+}
+.btnbar li{
+    float: left;
+    margin-right: 5px !important;
+}
+
+.btnbar li a{
+    color: #000000;
+}
+
+.a1>a:hover,.a2>a:hover,.a3>a:hover,.a4>a:hover,.a5>a:hover{
+    background: #479CF2 !important;
+}
+

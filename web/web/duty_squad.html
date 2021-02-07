@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="media/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-table.css">
+        <link href="media/css/style2.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/jquery-confirm.min.css" rel="stylesheet" type="text/css"/>
+
+        <!--<link rel="stylesheet" href="media/css/bootstrap-select.css">-->
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/policeManage.css">
+        <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table-zh-CN.js"></script>
+        <script src="media/js/app.js"></script>  
+        <script src="media/js/myjs.js" type="text/javascript"></script>
+        <script src="media/js/jquery-confirm.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-select.js"></script>
+        <title>分班</title>
+    </head>
+    <body>    
+        <main>
+            <div class="search">
+                <input type="text" placeholder="请输入组名" class="room form-control" id="key">
+                <label class="inquiry" onclick="searchByKey()" style="cursor: pointer;"><img src="img/fdj.png" alt=""> 搜索</label>
+            </div>
+            <div class="add" onclick="add()">+ 分班</div>
+            
+
+            <div class="container mytable">
+                <div class="row"  style="margin-left: -4%;width: 105%;">
+                    <table id="data_list" class="table table-striped table-bordered table-hover table-full-width"></table>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal33" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"  style="background-color: #19519C;height:54px;padding-top: 16px;">
+                        <h4 class="modal-title" id="myModalLabel" style="font-size: 18px;color: #FFFFFF">确认删除该班次吗？</h4>
+                    </div>
+                    <div class="modal-footer" style="height:54px;margin-top: -1px;padding-top: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="submit()" style="margin-right: 10px;">确认</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 模态框（Modal） 编辑角色-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #19519C;height: 54px;padding-top: 16px;">
+                        <h4 class="modal-title" id="myModalLabel" style="font-size: 18px;color: #FFFFFF">分班信息</h4>
+                    </div>
+                    <table class="table table-striped">
+                        <thead></thead>
+                        <tbody id="table-area">
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form" style="width:90%;">
+
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 29px;font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">组 名：</label>
+                                    <div class="col-sm-10"><input id='group_name'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 29px;font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">班 名：</label>
+                                    <div class="col-sm-10"><input id='class_name'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">值班人员1：</label>
+                                    <div class="col-sm-10"><input id='police_name1'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="font-size: 18px;font-weight: normal;margin-right: -50px;margin-top: -6px;">值班人员2：</label>
+                                    <div class="col-sm-10"><input id='police_name2'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        </tbody>
+                    </table>
+
+                    <div class="modal-footer" style="height:54px;margin-top: -51px;padding-top: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="submit()"  style="margin-right: 10px;">确认</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  style="">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- 模态框（Modal） 新增角色-->
+        <div class="modal fade" id="myModalClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #19519C;height: 54px;padding-top: 16px;">
+                        <h4 class="modal-title" id="myModalLabel" style="font-size: 18px;color: #FFFFFF">用户信息</h4>
+                    </div>
+                    
+                    <div class="panel-body">
+
+                            <div class="" style="width: 105%;margin-left: -15px;margin-bottom: 5px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;padding-left: 15px;margin-top: -4px;">
+                                <label for="firstname" class="col-sm-6 control-label" style="font-size: 18px;font-weight: normal;margin-right: -35px;margin-top: -6px;">请选择组名：</label>
+                                <div class="col-sm-10"><select id="userName" style="width: 180px;height: 35px;margin-bottom: 10px;margin-right: 20px;" class="form-control"></select></div>
+                                <div class="col-sm-10"><button onclick="seLect2()" style="width: 90px;height: 35px;margin-left: -40px;margin-top: -8px;font-size: 16px;" class="btn btn-info">点击分班</button></div>
+                            </div>
+                        
+                        <div class="" style="width: 650px;margin-left: -15px;">
+                            <table  class="table table-striped table-hover" style="border-collapse: unset;width: 92%;border:none !important;" cellpadding="5" cellspacing="5">
+                                <tbody id="newList"></tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                        
+                    <div class="modal-footer" style="height:54px;margin-top: -41px;padding-top: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="submit2()"  style="margin-right: 10px;">确认</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  style="">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="tip_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="false"></button>
+                        <h4 class="modal-title" >提示</h4>
+                        <span id="tip_msg"></span>
+                    </div>
+                    <!--<div class="modal-body"><span id="tip_msg"></span></div>-->   
+                    <div style="background:white; float: right; margin-right: 10px;"><a class="btn btn-default" onclick="javascript:$('#tip_dialog').modal('hide');">确定</a></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            var edit_id;
+            var action;
+            $(function () {
+                initTable();
+                //初始化分组下拉列表
+                groupLists();
+                
+            });
+            //初始化表格
+            function initTable() {
+                $('#data_list').bootstrapTable('removeAll');
+                $('#data_list').bootstrapTable({
+                    locale: 'zh-CN',
+                    pagination: true, //分页功能
+                    pageNumber: 1, //初始页面
+                    pageSize: 10, //每页行数
+                    pageList: [10],
+                    smartDisplay: true,
+                    clickToSelect: true, //是否启用点击选中行
+                    sidePagination: "server", //后台分页
+                    method: 'get',
+                    url: 'QueryDataServlet',
+                    dataField: 'data',
+                    queryParams: queryParams, //传给后台的查询参数
+                    responseHandler: responseHandler, //查询成功后执行方法
+                    columns: [
+                        {
+                            title: '序号', //标题  可不加  
+                            formatter: function (value, row, index) {
+                                return index + 1;
+                            }
+                        },
+                        
+                        {title: '组名',
+                            align: 'center',
+                            field: 'group_name'},
+                        {title: '班名',
+                            align: 'center',
+                            field: 'class_name',
+                        },
+                        {title: '值班人员1',
+                            align: 'center',
+                            field: 'police_name1',
+                        },
+                        {title: '值班人员2',
+                            align: 'center',
+                            field: 'police_name2',
+                        },
+                        {title: '操作',
+                            align: 'center',
+                            field: 'action',
+                            width: '20%',
+                            formatter: operateFormatter}]
+                });
+            }
+
+            //请求成功方法
+            function responseHandler(mdata) {
+                var errcode = mdata.code;//在此做了错误代码的判断
+                //                alert(JSON.stringify(mdata));
+                if (errcode != 0) {
+                    $.alert({
+                        title: '告警',
+                        content: "对不起，获取数据失败！",
+                    });
+                    return;
+                }
+
+                sessionStorage.items = JSON.stringify(mdata.result.data);
+                //如果没有错误则返回数据，渲染表格
+                return {
+                    total: mdata.result.total, //总页数,前面的key必须为"total"
+                    data: mdata.result.data //行数据，前面的key要与之前设置的dataField的值一致.
+                };
+            }
+
+            //生成表格中按钮
+            function operateFormatter(value, row, index) {
+                return ["<a  onclick='del(" + row.id + ");' target='content' title='删除' class='sc' style='margin-left: 95px !important'><i class='icon-remove moveicon-middle'>删除</i></a>\n\
+                                "].join('');
+            }
+            
+
+            //根据关键字查询
+            function searchByKey() {
+                $('#data_list').bootstrapTable('removeAll');
+                $('#data_list').bootstrapTable("refresh");
+            }
+            //请求服务数据时所传参数
+            function queryParams(params) {
+                //获取查询关键字
+                var key = document.getElementById("key").value;
+                if (key != "" && key != undefined && key != null) {
+                    key = key.trim();
+                }
+                //返回查询参数
+                return{
+                    //每页多少条数据
+                    rows: params.limit,
+                    //请求第几页
+                    page: params.pageNumber,
+                    sid: "get_class",
+
+                    order: "id",
+                    desc: "false",
+                    key: key
+                }
+            }
+            
+            //删除指定职位
+            function del(id) {
+                action = 2;
+                edit_id = id;
+                $('#myModal33').modal('show');
+            }
+            
+            //分班显示模态框
+        function add() {
+                action = 0;
+                $('#myModalClass').modal('show');
+            }
+            
+            //初始化分组下拉列表选项
+            function groupLists() {
+                var params = {};
+                params.sid = 'add_group';
+                //查询条件
+                //                params.condition = 'ifGroup = 0';
+                $.post('QueryDataServlet', params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        var items = data.result.data;
+                        var html = "";
+                        for (var i = 0; i < items.length; i++) {
+                            var id = items[i].id;
+                            var group_name = items[i].group_name;
+                            html += "<option value='" + id + "'>" + group_name + "</option>";
+                        }
+                        //初始化警员下拉列表
+                        $('#userName').html(html);
+                    }
+                })
+            }
+            
+            
+            function arra(arr) {
+                var cc = ``
+                for (var i = 0; i < arr.length; i++) {
+                    cc += `<option value="${arr[i]}">${arr[i]}</option>`
+                }
+                return cc;
+            }
+            var newElement = "";
+            var newPoliceId;
+            var newPolice;
+            var newHtml;
+
+            var oTable = document.getElementById("newList");
+            function seLect2() {
+                 newElement = "";
+                var params = {};
+                params.sid = 'add_group';
+                var selectValue = $("#userName").find("option:selected").val();
+                //查询条件            
+
+                $.post('QueryDataServlet', params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        var items = data.result.data;
+                        console.log(items);
+                        var str = "";
+                        for (var i = 0; i < items.length; i++) {
+                            var id = items[i].id;
+                            var polices = items[i].polices;
+                            if (selectValue == id) {
+                                str += polices;
+                            }
+                        }
+                        newHtml = JSON.parse(str);
+                        newPolice = newHtml.map((v, i) => {
+                            return v.police;
+                        });
+                        newPoliceId = newHtml.map((v, i) => {
+                            return v.id;
+                        })
+                        
+
+                        for (var i = 0; i < (newPolice.length) / 2; i++) {
+                            newElement += `
+                            <tr>
+                                <td class="classname" style="font-size:16px;width:30%;border:none;">第${i + 1}班</td>
+                                <td style="font-size:16px;border:none;"><select name="select_police" class="form-control changePeople" onclick="aaa()" style="width:70%;">${arra(newPolice)}</select></td>
+                  <td style="font-size:16px;border:none;"><select name="select_police" class="form-control changePeople" onclick="aaa()"  style="width:70%;">${arra(newPolice)}</select></td>
+                            </tr>
+                            `;
+                        }
+                        oTable.innerHTML = newElement;
+                    }
+                })
+            }
+            
+            // 下拉框重复判断
+            function aaa(){
+                var oldVal="";
+		$('.changePeople').each(function() {
+			if ($(this).find("option:selected")) {
+				var _thisVal = $(this).find('option:selected').val();
+				oldVal=$(this).attr("old",_thisVal);
+				$('.changePeople').parent().siblings("td").find("option[value="+_thisVal+"]").not("option[value=0]").hide();
+			}
+		})
+
+		$(".changePeople").change(function(){
+			oldVal=$(this).attr("old");
+			var _thisVal=$(this).find('option:selected').val();
+			var id=$(this).attr("id");
+			$(this).parent().siblings("td").find("option[value="+_thisVal+"]").not("option[value=0]").hide();
+			$(this).parent().siblings("td").find("option[value="+oldVal+"]").show();
+			$(this).find("option[value="+oldVal+"]").show();
+			$(this).attr("old",_thisVal);
+		})
+            }
+            
+            // 点击确定增加分班
+            function submit2() {
+                
+                var params = {};
+                var Info = [];
+                params.sid = 'add_class';
+
+                var newpolice = Array.from($("select[name='select_police']").map(function () {
+                    return $(this).val();
+                }));
+
+                var arr = [];
+                for (var i = 0; i < newpolice.length; i++) {
+                    for (var j = 0; j < newHtml.length; j++) {
+                        if (newpolice[i] == newHtml[j].police) {
+                            arr.push({id: newHtml[j].id, police: newpolice[i]})
+                        }
+                    }
+                }
+                console.log(arr);
+                
+                for(var i=0;i<arr.length-1;i++){
+                        if(arr[i].id==arr[i+1].id){
+                            $.alert({
+                                title: '警告!',
+                                content: '对不起，人员姓名不能重复！',
+                            });
+                            return;
+                        }
+                        
+                }
+
+                var twoPolice = [];
+                for (var i = 0; i < arr.length; i += 2) {
+                          twoPolice.push(arr.slice(i, i + 2));
+                }
+                
+
+                var className = Array.from($(".classname").map(function () {
+                    return $(this).html();
+                }));
+
+                for (var i = 0; i < (newPolice.length) / 2; i++) {
+                    var item = {};
+                    item.group_name = $("#userName").find("option:selected").text();  // 组名
+                    item.group_no = $("#userName").find("option:selected").val();  // 组号
+                    item.class_name = className[i]; // 班名
+                    
+                    item.police_name1 = twoPolice[i][0].police;
+                    item.police_id1 = twoPolice[i][0].id;
+                    item.police_name2 = twoPolice[i][1].police;
+                    item.police_id2 = twoPolice[i][1].id;
+                    
+                    Info.push(item);
+                    console.log(Info);
+                }
+                
+                
+                
+                params.data = JSON.stringify(Info);
+                
+                $.post('AddBatchServlet', params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        //成功
+                        $.alert({
+                            title:"提示",
+                            content:data.info
+                        });
+                        $('#myModalClass').modal('hide');
+
+                        //刷新表格数据
+                        $('#data_list').bootstrapTable("removeAll");
+                        $('#data_list').bootstrapTable("refresh");
+                    } else {
+                        $.alert({
+                            title:"提示",
+                            content:data.info
+                        });
+                    }
+                })
+            }
+            
+            
+            //删除指定职位
+            function del(id) {
+                action = 2;
+                edit_id = id;
+                $('#myModal33').modal('show');
+            }
+            
+            
+            function submit() {
+                var params = {};
+                var item = {};
+                if (action == 0) {
+                    params.sid = "add_class";
+                    url = "AddDataServlet";
+                } else if (action == 1) {
+                    params.sid = "update_class";
+                    params.condition = "id = " + edit_id;
+                    url = "UpdateDataServlet";
+                } else {
+                    //删除操作
+                    params.sid = "delete_class";
+                    params.condition = "id = " + edit_id;
+                    url = "DeleteDataServlet";
+                    //隐藏删除确认对话框 
+                    $('#myModal33').modal('hide');
+                }
+           
+            $.post(url, params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        //成功
+                        $.alert({
+                            title:"提示",
+                            content:data.info
+                        });
+                        $('#myModal').modal('hide');
+                        //刷新表格数据
+                        $('#data_list').bootstrapTable("removeAll");
+                        $('#data_list').bootstrapTable("refresh");
+                    } else {
+                        $.alert({
+                            title:"提示",
+                            content:data.info
+                        });
+                    }
+                });
+        }
+            
+            
+        </script>
+
+    </body>
+</html>

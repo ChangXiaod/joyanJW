@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="media/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="media/css/bootstrap-table.css">        
+        <link href="media/css/jquery-confirm.min.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/style2.css" rel="stylesheet" type="text/css"/>
+        <!--<link rel="stylesheet" href="media/css/bootstrap-select.css">-->
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/alarmManage.css">
+        <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table-zh-CN.js"></script>
+        
+        <script src="media/js/myjs.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="media/js/bootstrap-datetimepicker.zh-CN.js"></script>
+        <title>报警管理</title>
+    </head>
+    <body>
+        <main style="margin-top: 0px !important">
+
+            <div class="rightpage">
+                <div class="search">
+                    <div class="time_box">
+                        从&nbsp;<input type="text" id="begin_date" readonly placeholder="点击选择开始时间" value="" class="form_datetime form-control begin_date">
+                        &nbsp;至&nbsp;<input type="text" id="end_date" readonly placeholder="点击选择结束时间" value="" class="form_datetime form-control end_date">
+                    </div>
+                    
+                    <input type="text" placeholder="请输入警员姓名、手环编号等内容" class="room form-control" id="key">
+                    <label class="inquiry" onclick="searchByKey()" style="cursor: pointer;"><img src="img/fdj.png" alt="" > 搜索</label>
+                </div>
+
+<!--                <div class="warn"></div>
+                <div class="newbox">
+                    <img src="img/caveat.png" alt="">
+                    <p>警员张峰，手环编号1256478，所在3-1403号房间，请派人查看是否正常</p>
+                </div>-->
+
+                <div class="container mytable">
+
+                    <div class="row" style="margin-left: -4%;width: 105%;">
+                        <table id="data_list" class="table table-striped table-bordered table-hover table-full-width"></table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <script>
+            
+            var utils = {
+            bindTimePicker: function ($controls, opt) {
+            $controls.each(function (i, e) {
+            var $control = $(e),
+            options = $.extend({
+            language:  'zh-CN',
+            autoclose: true,
+            format: "yyyy-mm-dd hh:ii:ss",
+            minuteStep:1
+            }, opt);
+            $control.datetimepicker(options);
+            });
+            },
+            }
+            utils.bindTimePicker($("#begin_date, #end_date"), {format: "yyyy-mm-dd hh:ii:ss"});
+            $("#begin_date").datetimepicker().on("changeDate", refreshDate);
+            var refreshDate = function () {
+            var start = $("#begin_date").val();
+            $("#end_date").datetimepicker("setStartDate", start);
+            };
+            
+
+            $(function () {
+            initTable();
+            });
+            
+            //初始化表格
+            function initTable() {
+            $('#data_list').bootstrapTable('removeAll');
+            $('#data_list').bootstrapTable({
+            locale: 'zh-CN',
+            pagination: true, //分页功能
+            pageNumber: 1, //初始页面
+            pageSize: 12, //每页行数
+            pageList: [12],
+            smartDisplay: true,
+            clickToSelect: true, //是否启用点击选中行
+            sidePagination: "server", //后台分页
+            method: 'get',
+            url: 'QueryDataServlet',
+            dataField: 'data',
+            queryParams: queryParams, //传给后台的查询参数
+            responseHandler: responseHandler, //查询成功后执行方法
+            columns: [
+            {
+            title: '序号', //标题  可不加
+            align: 'center',
+            formatter: function (value, row, index) {
+            return index + 1;
+            }
+            }, 
+            {title: '记录编号',
+            align: 'center',
+            field: 'record_number'},
+            {title: '房间编号',
+            align: 'center',
+            field: 'room_number'},
+            {title: '房间名称',
+            align: 'center',
+            field: 'room_number'},
+            {title: '工号',
+            align: 'center',
+            field: 'police_id'},
+            {title: '姓名',
+            align: 'center',
+            field: 'police_name'},
+            {title: '报警类型',
+            align: 'center',
+            field: 'alarm_type'},
+            {title: '报警信息',
+            align: 'center',
+            field: 'alarm_msg'},
+            {title: '备注',
+            align: 'center',
+            field: 'note'}]
+            });
+            }
+
+            //请求成功方法
+            function responseHandler(mdata) {
+            var errcode = mdata.code;//在此做了错误代码的判断
+            //                alert(JSON.stringify(mdata));
+            if (errcode != 0) {
+            $.alert({
+            title: '告警',
+            content: "对不起，获取数据失败！",
+            });
+            return;
+            }
+
+            sessionStorage.items = JSON.stringify(mdata.result.data);
+            //如果没有错误则返回数据，渲染表格
+            return {
+            total: mdata.result.total, //总页数,前面的key必须为"total"
+            data: mdata.result.data //行数据，前面的key要与之前设置的dataField的值一致.
+            };
+            }
+            //根据关键字查询
+            function searchByKey() {
+            $('#data_list').bootstrapTable('removeAll');
+            $('#data_list').bootstrapTable("refresh");
+            }
+            //请求服务数据时所传参数
+            function queryParams(params) {
+            //获取查询关键字
+            var key = document.getElementById("key").value;
+            var conditions = {};
+            if (key != "" && key != undefined && key != null) {
+            key = key.trim();
+            conditions.key = "%" + key + "%";
+            }
+            //返回查询参数
+            return{
+            //每页多少条数据
+            rows: params.limit,
+            //请求第几页
+            page: params.pageNumber,
+            sid: "get_alarm",
+            order: "id",
+            desc: "true",
+            key: key,
+            conditions: JSON.stringify(conditions)
+            }
+            }
+
+
+        </script>
+
+    </body>
+
+</html>

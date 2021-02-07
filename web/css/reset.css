@@ -1,0 +1,46 @@
+*{padding: 0;margin: 0;box-sizing: border-box;}
+body, ul, li, h1, h2, h3, h4, h5, h6, p, form, dl, dt, dd { 
+	margin: 0px; 
+	padding: 0px; 
+	font-weight: normal;
+}
+a{text-decoration: none;}
+li{list-style: none;}
+img{vertical-align: middle;  border: none;
+}
+input{
+	outline: none;
+}
+
+html,body{height: 100%;}
+
+h1,h2,h3,h4,h5,h6{font-size: 16px;font-weight: normal;}
+
+b,strong{font-weight: normal;}
+
+i,em{font-style: normal;}
+
+.clear:after{
+	content: "";display: block;clear: both;
+	height: 0;overflow: hidden;visibility: hidden;
+}
+
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
+}
+
+/* 公共的top区域 */
+.if-top{
+	display: block;
+	height: 180px;width: 100%;
+}
+
+/* 公共的bottom区域 */
+.if-bottom{
+	display: block;
+	height: 126px;width: 100%;
+}

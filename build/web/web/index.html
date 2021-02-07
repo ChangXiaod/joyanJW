@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/bottom.css">
+        <script src="media/js/jquery-1.10.2.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js"></script>
+        <script src="media/js/myjs.js" type="text/javascript"></script>    
+        <title>重要岗位值班员体征监测预警系统</title>
+    </head>
+    <body>
+        <div id="bigbox">
+            <header>重 要 岗 位 值 班 员 体 征 监 测 预 警 系 统</header>
+            <main></main>
+            <div class="myform">
+                <p>用户登录</p>
+                <input type="text" placeholder="用户名" class="username" id='account' value="admin">
+                <input type="password" placeholder="密码" class="upwd" id='password' value="admin">
+                <div class="forgetupass">忘记密码？</div>
+                <a href='javascript:message_OnSubmit(); '><div class="dl" id='btn_dl'>登录</div></a>
+                <div>
+                    <span id="tips" style="color:red; float: left; margin-left: 14%;position: absolute;top: 166px;left: 8px; "></span>
+                </div>
+                <div class="bottombox">
+                    <input type="checkbox" name="remember" id="remember">
+                    <span>自动登录</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 21%;">
+            <img src="img/download.png" alt="" class="pic">
+            <div class="right">
+                <em>本系统由西安交远能源科技有限公司 提供技术支持</em> <br>
+                <p>建议您使用IE9及以上版本、Chrome、Firefox和360等主流浏览器打开本系统</p>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var scanning = true;
+            $(function () {
+                //获取localStorage中存储的用户名和密码
+                var strAccount = localStorage.getItem('account');
+                var strPassword = localStorage.getItem('password');
+
+                if (strAccount) {
+                    $('#account').val(strAccount);
+                }
+                if (strPassword) {
+                    $('#password').val(strPassword);
+                }
+            });
+            /**
+             * 检查用户名、密码、验证码是否为空
+             */
+            function message_OnSubmit() {
+                var name = $("#account").val();
+                var pwd = $('#password').val();
+                if (checkspace(name)) {
+                    document.getElementById("account").focus();
+                    document.getElementById("tips").innerHTML = "";
+                    document.getElementById("tips").innerHTML = "用户名不能为空！";
+                    return false;
+                }
+                if (checkspace(pwd)) {
+                    document.getElementById("password").focus();
+                    document.getElementById("tips").innerHTML = "";
+                    document.getElementById("tips").innerHTML = "密码不能为空！";
+                    document.getElementById("tips").style.top = "252px";
+                    return false;
+                }
+
+                $("#btn_dl").text('登录中...');
+
+                $.post("LoginServlet", {name: name, pwd: pwd},
+                        function (data) {
+                            console.dir(data);
+                            $("#btn_dl1").text('登      录');
+                            console.log('data.success is ' + data.success);
+                            if (data.success) {
+                                if ($('#remember').is('checked')) {
+                                    localStorage.setItem("account", data.account);
+                                    localStorage.setItem("password", data.password);
+                                } else {
+                                    localStorage.removeItem('account');
+                                    localStorage.removeItem('password');
+                                }
+                                window.location.replace("main.html");
+                            } else {
+                                $("#tips").text(data.msg);
+                                return;
+                            }
+                        }, "json");
+            }
+
+            $('#password').keydown(function (event) {
+                if (event.keyCode === 13) {
+                    message_OnSubmit();
+                }
+            });
+
+        </script>
+    </body>
+</html>

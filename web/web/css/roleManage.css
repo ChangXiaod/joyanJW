@@ -1,0 +1,278 @@
+main{
+    background: #F0F0F0;
+    height: 780px;
+    padding-top: 33px;
+}
+
+.leftpage{
+    width: 300px;
+    height: 724px;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    margin-left: 103px;
+    position: relative;
+    float: left;
+}
+
+.place{
+    width: 205px;
+    height: 14px;
+    font-size: 14px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #000000;
+    position: absolute;
+    top: 26px;left: 13px;
+}
+
+.leftpage ul{
+    display: flex;
+    background: #FFFFFF !important;
+}
+
+.breadcrumb{
+    padding: 0 !important;
+}
+
+.breadcrumb > li + li:before {
+    color: #000000 !important;
+    content: ">";
+    padding: 0 5px;
+}
+
+.title{
+    position: absolute;
+    top: 89px;left: 52px;
+    word-spacing: 5px;
+    font-size: 18px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #196AA9;
+}
+
+.line{
+    width: 227px;
+    height: 1px;
+    background: #FE5000;
+    position: absolute;
+    top: 118px;left: 41px;
+}
+
+.find,.find1{
+    width: 205px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    padding-left: 56px;
+    position: absolute;
+    left: 52px;
+}
+
+.find{
+    background: #1578D5;
+    color: #FFFFFF;
+    top: 127px;
+    word-spacing: 48px;
+}
+
+.find1{
+    background: #E4E4E4;
+    color: #000000;
+    word-spacing: 48px;
+    top: 170px;
+}
+
+
+.rightpage{
+    float: left;
+    width: 1393px;
+    height: 724px;
+    margin-left: 19px;
+    position: relative;
+}
+
+.search{
+    position: absolute;
+    left: 0;top: 0;
+    display: flex;
+}
+
+.room{
+    width: 545px;
+    height: 35px;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.64);
+    padding-left: 24px;
+}
+
+.inquiry{
+    display: block;
+    width: 85px;
+    height: 35px;
+    background: #F58515;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 35px;
+    word-spacing: 5px;
+}
+
+.add{
+    width: 85px;
+    height: 35px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    line-height: 35px;
+    background: #F58515;
+    font-size: 20px;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #FFFFFF;
+
+}
+
+.mytable{
+    width: 1393px;
+    min-height: 105px;
+    margin-top: 54px;
+}
+
+table{    
+    border: 1px solid #E7E8E9;
+}
+
+.tablefirst{
+    padding-left: 40px !important;
+}
+
+th{
+    height: 63px;
+    background: #F0F7FF;
+    font-size: 18px;
+    font-family: Microsoft YaHei;
+    font-weight: 400;
+    color: #19519C;
+    text-align: left;
+}
+td{
+    height: 44px;
+    font-size: 16px;
+    font-family: Microsoft YaHei;
+    font-weight: 300;
+    color: #000000;
+    background: #FFFFFF;
+}
+
+.table tbody tr td,.table tbody tr th{
+    vertical-align: middle;
+}
+
+.test{
+    position: relative;
+    height: 44px;
+}
+
+.istrue,.isfalse{
+    position: absolute;
+    left: 50%; top: 50%;
+	transform: translate(-50%,-50%);
+    display: block;
+    background: rgba(245, 247, 250, 1);
+    height: 37px;
+    line-height: 37px;
+}
+
+.istrue{
+    width: 55px;
+}
+
+.isfalse{
+    width: 68px;
+}
+
+.btntrue,.btnfalse{
+    width: 30px;
+    height: 22px;
+    border-radius: 4px;
+    padding-left: 8px;
+    line-height: 8px;
+    outline: none !important;
+}
+
+.btntrue{
+    background: #67c23a;
+    color: #FFFFFF;
+}
+
+.btnfalse{
+    background: rgba(232, 232, 233, 1);
+    color:rgba(166, 169, 173, 1);
+}
+
+.btnfalse:hover, .btnfalse:focus, .btnfalse:active, .btnfalse:visited {
+    color:rgba(166, 169, 173, 1) !important;
+}
+
+.xg,.del{
+    width: 62px;
+    height: 27px;
+    text-align: center;
+    font-size: 12px;
+    font-family: Microsoft YaHei;
+    font-weight: 300;
+    color: #FFFFFF;
+    line-height: 15px;
+}
+
+.xg{ 
+    background: #479CF2;
+    margin-right: 32px;
+}
+
+.del{   
+    background: #DA251D;
+}
+
+
+.xg,.del{
+     outline: none !important;
+     /* box-shadow: none !important; */
+ }
+
+
+.btn:hover, .btn:focus, .btn:active, .btn:visited {
+    color: #FFFFFF;
+}
+
+.btnbar{
+    width: 380px;
+    height: 38px;
+    position: absolute;
+    right:123px ;bottom:5px;
+    background: #FFFFFF;
+    padding-top: 2px;
+    padding-left: 10px !important;
+    line-height: 40px;
+}
+.btnbar li{
+    float: left;
+    margin-right: 5px !important;
+}
+
+.btnbar li a{
+    color: #000000;
+}
+
+.a1>a:hover,.a2>a:hover,.a3>a:hover,.a4>a:hover,.a5>a:hover{
+    background: #479CF2 !important;
+}

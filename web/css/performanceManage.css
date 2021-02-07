@@ -1,0 +1,123 @@
+body{
+    background: #F0F0F0;
+    height: 780px;
+    padding-top: 33px;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+}
+
+main{
+    float: left;
+    width: 1340px;
+    height: 724px;
+    position: relative;
+    margin: auto;
+    margin-top: -16px;
+}
+
+.timebox{
+    width: 800px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
+     cursor: text; 
+}
+
+
+.datedata{
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+.btnsure{
+    width: 62px;
+    height: 35px;
+    text-align: center;
+    font-size: 16px;
+    color: #FFFFFF;
+    line-height: 15px;
+    margin-left: 10px;
+}
+
+.btnsure{
+    outline: none !important;
+    /* box-shadow: none !important; */
+}
+
+.btn:hover, .btn:focus, .btn:active, .btn:visited {
+   color: #FFFFFF;
+}
+
+
+.mytable{
+    width: 95%;
+    min-height: 105px;
+    margin-top: 15px;
+}
+
+table{    
+    border: 1px solid #E7E8E9;
+}
+
+.tablefirst{
+    padding-left: 40px !important;
+}
+
+input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly]{
+    cursor:pointer;
+}
+
+.th-inner{
+    height: 63px !important;
+    background: #F0F7FF !important;
+    font-size: 20px !important;
+    font-family: Microsoft YaHei !important;
+    font-weight:600 !important;
+    color: #19519C !important;
+}
+
+.fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner{
+    line-height: 50px;
+}
+
+.table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th{
+    background: #FFFFFF;
+}
+
+.table-striped tbody>tr:nth-child(even)>td, .table-striped tbody>tr:nth-child(even)>th{
+    background: #FFFFFF;
+}
+
+.bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+    height: 44px !important;
+    font-size: 16px;
+    font-family: Microsoft YaHei;
+    font-weight: 300;
+    color: #000000;
+    background: #FFFFFF;
+}
+
+.table tbody tr td,.table tbody tr th{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.btntrue{
+    width: 30px;
+    height: 22px;
+    border-radius: 4px;
+    padding-left: 8px;
+    line-height: 8px;
+    outline: none !important;
+}
+
+.btntrue{
+    background: #67c23a;
+    color: #FFFFFF;
+}

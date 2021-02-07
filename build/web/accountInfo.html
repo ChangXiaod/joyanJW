@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>修改个人信息</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="media/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-table.css">
+        <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/jquery-confirm.min.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/style2.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-select.css">
+        
+        <link rel="stylesheet" href="css/reset.css">
+        <!--<link rel="stylesheet" href="css/bandManage.css">-->
+        <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table-zh-CN.js"></script>
+        
+        <script src="media/js/myjs.js" type="text/javascript"></script>
+        <script src="media/js/jquery-confirm.min.js" type="text/javascript"></script>
+        <script src="media/js/jquery-md5.js"></script>
+        
+        <script src="media/js/bootstrap-select.js"></script>
+    </head>
+    
+    <body style="background: #F0F0F0;height: 780px;padding-top: 33px;overflow: hidden;width: 100%;">
+        <main style="float: left;width: 1340px;height: 724px;margin-left: 1%;position: relative;margin-top: -16px;">
+            <div style="width:100%;border: 2px solid #E7E8E9;background: #FFFFFF; ">
+                <div class="panel-heading" style="background-color: #19519C;color: #FFFFFF;height: 50px;line-height: 35px;padding-left: 10px;"><span class="panel-title" style="font-size: 18px !important;">编辑个人信息</span></div>
+                <table class="table table-striped">
+                        <thead>
+                        </thead>
+                        <tbody id="table-area">
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form" style="width:90%;">
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;margin-top: -3px;">
+                                    <label for="firstname" class="col-sm-2 control-label" style="font-size: 18px;font-weight: normal;margin-right: -130px;margin-top: -6px;word-spacing: 4px;">真实姓名：</label>
+                                    <div class="col-sm-10"><input id='realName'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="font-size: 18px;font-weight: normal;margin-right: -245px;margin-top: -6px;word-spacing: 29px;">性 别：</label>
+                                    <div class="col-sm-10">
+                                        <select id="sex" style="width: 180px;height: 35px;margin-bottom: 10px;"  class="form-control">
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 29px;font-size: 18px;font-weight: normal;margin-right: -245px;margin-top: -6px;">手 机：</label>
+                                    <div class="col-sm-10"><input id='mobile'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 29px;font-size: 18px;font-weight: normal;margin-right: -245px;margin-top: -6px;">职 称：</label>
+                                    <div class="col-sm-10"><input id='job_title'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;margin-top: -4px;">
+                                    <label for="firstname" class="col-sm-3 control-label" style="word-spacing: 29px;font-size: 18px;font-weight: normal;margin-right: -245px;margin-top: -6px;">职 务：</label>
+                                    <div class="col-sm-10"><input id='job_name'  type='text' style="width: 180px;height: 35px;margin-bottom: 10px;" class="form-control" /></div>
+                                </div>
+                                
+                                <div class="form-group" style="width: 105%;margin-left: -15px;display: flex;border-bottom: 1px solid #f5f5f5;align-items: center;margin-top: -14px;">
+                                    <label for="firstname" class="col-sm-2 control-label" style="font-size: 18px;font-weight: normal;margin-right: -130px;margin-top: 4px;">所属单位：</label>
+                                    <div class="col-sm-10"><select id="orgname" style="width: 180px;height: 35px;margin: 10px 0;" class="form-control"></select></div>
+                                </div>
+                                
+                            </form>
+                            <div id="pagedivide" style="text-align:center;height: 5px;">
+                                <div class="btn-group btn-group-s" style="height: 25px;margin-top:-8px;">
+                                    <button type="button" class="btn btn-primary" onclick="updateInfo()" id="ok_btn" style="width:120px;">提交</button> 
+                                </div>
+                            </div>
+                        </div>
+                        </tbody>
+                    </table>
+        </main>
+        
+        
+        <script type="text/javascript">
+            //权限哈希表
+            var role_hash = new HashMap();
+            
+            //查询单位列表，并且初始化单位选择框
+            initOrg();
+            editUser();
+            function initOrg() {
+                var params = {};
+                params.sid = "get_organization";
+                params.page = 1;
+                params.rows = 50;
+                $.post("QueryDataServlet", params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        //成功
+                        $("#orgname").empty();
+                        var items = data.result.data;
+                        if (items != null && items != undefined) {
+                            var i = 0;
+                            for (; i < items.length; i++) {
+                                var item = items[i];
+                                //创建一个选择项元素
+                                var option = document.createElement("option");
+                                option.value = item.org_code;
+                                option.innerHTML = item.org_code + ":" + item.org_name;
+                                document.getElementById("orgname").appendChild(option);
+                            }
+
+                        }
+                    }
+                });
+            }+
+                    
+
+            //填充用户信息
+            function editUser() {
+                var params = {};
+                params.sid = "get_user";
+                params.condition = "userName='" + sessionStorage.getItem("login_account") + "'";
+                
+                //查询用户详细信息
+                $.post("QueryDataServlet", params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        var item = data.result.data[0];
+                        setInputs(item);
+                    }
+                });
+            }
+
+            //新增或者修改用户信息
+            function updateInfo() {
+                var url = "";
+                var item = {};
+                var params = {};
+                //后台服务名称
+                params.sid = "update_user";
+                params.condition = "userName='" + sessionStorage.getItem("login_account") + "'";
+//                params.condition = "userName= :userName";
+                item.userName = sessionStorage.getItem("login_account");
+                url = "UpdateDataServlet";
+                //真实姓名
+                item.realName = $("#realName").val();
+                if (item.realName == "" || item.realName == null || item.realName == undefined) {
+                    $.alert({
+                        title: '警告!',
+                        content: '对不起，真实姓名不能为空！',
+                    });
+                    return;
+                }
+                if (!checkUserName(item.realName)) {
+                    $.alert({
+                        title: '警告!',
+                        content: '对不起，真实姓名应为2-6个中文！',
+                    });
+                    return;
+                }
+                //性别
+                item.sex = $("#sex").val();
+
+                //手机
+                item.mobile = $("#mobile").val();
+                if (item.mobile == "" || item.mobile == null || item.mobile == undefined) {
+                    $.alert({
+                        title: '警告!',
+                        content: '对不起，手机不能为空！',
+                    });
+                    return;
+                }
+                if(!checkMobileNo(item.mobile)){
+                    $.alert({
+                        title: '警告!',
+                        content: '对不起，手机号码格式错误！',
+                    });
+                    return;
+                }
+               
+                //职称
+                item.job_title = $("#job_title").val();
+                //职务
+                item.job_name = $("#job_name").val();
+                
+               //用户职位及权限
+//                var role_ids = $("#role").val();
+////                alert(role_ids);
+//                var role_names = "";
+//                var i;
+//                for (i = 0; i < role_ids.length; i++) {
+//                    var role_name = role_hash.get(role_ids[i]);
+//                    role_names += role_name + "<br>";
+//                }
+//                item.reqRoleIDS = role_ids;
+//                item.reqRoleIDS = JSON.stringify(role_ids);
+//                item.name = role_names;
+                //组织结构
+                item.departSID = $("#orgname").val();
+                item.orgCode = $("#orgname").find("option:selected").text().split(":")[0];
+                item.orgName = $("#orgname").find("option:selected").text().split(":")[1];
+//                如果修改了账号信息，状态变为不可用，等待秘书处管理员审批后方可生效
+                item.isActive = 1;
+                params.data = JSON.stringify(item);
+//                alert(params.data);
+                $.post(url, params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        //成功
+                        $.alert({
+                            title: '提示!',
+                            content: data.info,
+                        });
+                    } else {
+                        $.alert({
+                            title: '提示!',
+                            content: data.info,
+                        });
+                    }
+                });
+            }
+        </script>
+        
+    </body>
+        
+
+</html>

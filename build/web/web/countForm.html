@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/countForm.css">
+        <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="media/js/echarts.min.js"></script>
+        <title>统计报表</title>
+    </head>
+
+    <body>
+        <main>
+            <div class="echartsbox">
+                <div class="header">
+                    <div class="num">
+                        <p>本年报警数量</p>
+                        <span>126</span>
+                        <img src="img/download1.png" alt="">
+                    </div>
+
+                    <div class="num">
+                        <p>本年监管时长</p>
+                        <span>12626h</span>
+                        <img src="img/layer1.png" alt="">
+                    </div>
+
+                    <div class="num" style="margin-right: 0;">
+                        <p>本年监管人次</p>
+                        <span>1226次</span>
+                        <img src="img/layer2.png" alt="">
+                    </div>
+                </div>
+
+                <div class="echartsform">
+                    <div id="main" class="fl" style="width: 1100px;height:310px;background: #ffffff;margin-bottom: 10px;"></div>
+                    <div id="mainOne" class="fl" style="width: 530px;height:310px;background: #ffffff;margin-left: 20px;margin-bottom: 10px;"></div>
+                    <div id="mainTwo" class="fl" style="width: 540px;height:310px;background: #ffffff;margin-right: 20px;"></div>
+                    <div id="mainThree" class="fl" style="width: 540px;height:310px;background: #ffffff;margin-right: 20px;"></div>
+                    <div id="mainFour" class="fl" style="width: 530px;height:310px;background: #ffffff;"></div>
+                </div>
+            </div>
+        </main>
+        <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    var option = {
+    color: ['rgba(103, 224, 227, 1)', 'rgba(55, 162, 218, 1)'],
+            title: {
+            text: '领用/归还统计（%）', textStyle: {
+            fontWeight: "300",
+                    color: "#333333",
+                    fontSize: "13px",
+                    fontFamily: "Microsoft YaHei"
+
+            }
+            },
+            legend: {},
+            tooltip: {},
+            dataset: {
+            source: [
+            ['product', '一队', '二队'],
+            ['1月', 33, 48.8],
+            ['2月', 83.1, 73.4],
+            ['3月', 86.4, 65.2],
+            ['4月', 52.4, 26.9],
+            ['5月', 32.4, 53.9],
+            ['6月', 42.4, 53.9],
+            ['7月', 52.4, 53.9],
+            ['8月', 62.4, 53.9],
+            ['9月', 62.4, 53.9],
+            ['10月'],
+            ['11月'],
+            ['12月']
+            ]
+            },
+            xAxis: { type: 'category' },
+            yAxis: {
+            show: true,
+                    axisLine: { show: true },
+                    axisTick: { show: true },
+                    splitLine: { show: true },
+                    type: 'value',
+                    show: true,
+                    scale: true,
+                    min: 25,
+                    max: 100,
+                    interval: 25,
+            },
+            series: [
+            { type: 'bar' },
+            { type: 'bar' }
+            ]
+    };
+    myChart.setOption(option);
+    // ---------------------------------------------------------
+    var myChartOne = echarts.init(document.getElementById('mainOne'));
+    var optionOne = {
+    color: ['rgba(103, 224, 227, 1)', 'rgba(55, 162, 218, 1)'],
+            title: {
+            text: '领用/归还统计（%）', textStyle: {
+            fontWeight: "300",
+                    color: "#333333",
+                    fontSize: "13px",
+                    fontFamily: "Microsoft YaHei"
+
+            }
+            },
+            tooltip: {
+            trigger: 'axis',
+                    axisPointer: {
+                    type: 'shadow'
+                    },
+//                    formatter: (params) = > {
+//            if (!params.length) return ''
+//                    let s = params[0].axisValueLabel + '<br/>'
+//                    for (const iterator of params) {
+//            // 如果是负数则反转
+//            let d = iterator.data < 0 ? - iterator.data : iterator.data
+//                    s += iterator.marker + iterator.seriesName + '：' + d + '<br/>'
+//            }
+//            return s
+//            }
+            },
+            legend: {
+            data: ['一队', '二队']
+            },
+            grid: {
+            left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+            },
+            xAxis: [
+            {
+            type: 'value',
+                    show: true,
+                    axisTick: { //坐标轴刻度相关设置。
+                    show: true,
+                    },
+                    axisLine: {
+                    show: true, //是否显示坐标轴轴线。
+                            // onZero:false,//X 轴或者 Y 轴的轴线是否在另一个轴的 0 刻度上，只有在另一个轴为数值轴且包含 0 刻度时有效。
+                            lineStyle: {
+                            width: 2,
+                            },
+                    },
+                    axisLabel: {
+//                    formatter: (value) = > {
+//                    if (value < 0) return - value
+//                            else return value
+//                    }
+                    }
+
+            }],
+            yAxis: [
+            {
+            type: 'category',
+                    axisTick: {
+                    show: false
+                    },
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月']
+            }
+            ],
+            series: [
+
+            {
+            name: '一队',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                    show: true
+                    },
+                    data: [320, 302, 341, 374, 390, 450, 420, 300, 210]
+            },
+            {
+            name: '二队',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                    show: true,
+                            position: 'left',
+//                            formatter: (value) = > {
+//                    return - value.data
+//                    }
+                    },
+                    data: [ - 120, - 132, - 101, - 134, - 190, - 230, - 210, - 190, - 220]
+            }
+            ]
+    };
+    myChartOne.setOption(optionOne);
+    // ------------------------------------------------------------------------------
+
+    var myChartTwo = echarts.init(document.getElementById('mainTwo'));
+    var optionTwo = {
+    title: {
+    text: '值班统计（次）', textStyle: {
+    fontWeight: "300",
+            color: "#333333",
+            fontSize: "13px",
+            fontFamily: "Microsoft YaHei"
+
+    }
+    },
+            tooltip: {
+            trigger: 'item',
+                    // formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            series: [
+            {
+            name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '50%'],
+                    minAngle: 15, //最小角度
+                    startAngle: 250, //起始角度
+                    data: [
+                    { value: 335, name: '四队', itemStyle: { color: "rgba(90, 180, 222, 1)" } },
+                    { value: 234, name: '三队', itemStyle: { color: "rgba(255, 219, 92, 1)" } },
+                    { value: 310, name: '二队', itemStyle: { color: "rgba(41, 188, 187, 1)" } },
+                    { value: 135, name: '一队', itemStyle: { color: "rgba(30, 102, 157, 1)" } },
+                    { value: 1548, name: '五队', itemStyle: { color: "rgba(41, 188, 187, 1)" } },
+                    ],
+                    emphasis: {
+                    itemStyle: {
+                    shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                    }
+            }
+            ]
+    };
+    myChartTwo.setOption(optionTwo);
+    // ----------------------------------------------------------
+
+    var myChartThree = echarts.init(document.getElementById('mainThree'));
+    var optionThree = {
+    title: {
+    text: '房间统计（%）', textStyle: {
+    fontWeight: "300",
+            color: "#333333",
+            fontSize: "13px",
+            fontFamily: "Microsoft YaHei"
+
+    }
+    },
+            tooltip: {
+            trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+            },
+            legend: {
+            orient: 'vertical',
+                    x: 'left',
+                    y: 'center',
+                    left: 10,
+                    data: ['一队', '二队', '三队'],
+            },
+            series: [
+
+            {
+            minAngle: 15, //最小角度
+                    startAngle: 140, //起始角度
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['30%', '60%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                    show: false,
+                            position: 'center'
+                    },
+                    emphasis: {
+                    label: {
+                    show: true,
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                    }
+                    },
+                    labelLine: {
+                    show: false
+                    },
+                    data: [
+                    { value: 935, name: '一队', itemStyle: { color: "rgba(103, 224, 227, 1)" } },
+                    { value: 410, name: '二队', itemStyle: { color: "rgba(90, 180, 222, 1)" } },
+                    { value: 134, name: '三队', itemStyle: { color: "rgba(255, 219, 92, 1)" } },
+                    ]
+            }
+            ]
+    };
+    myChartThree.setOption(optionThree);
+    //----------------------------------------------------------
+    var myChartFour = echarts.init(document.getElementById('mainFour'));
+    var optionFour = {
+    color: ['rgba(255, 219, 92, 1)', 'rgba(55, 162, 218, 1)', 'rgba(103, 224, 227, 1)'],
+            title: {
+            text: '报警统计（次）', textStyle: {
+            fontWeight: "300",
+                    color: "#333333",
+                    fontSize: "13px",
+                    fontFamily: "Microsoft YaHei"
+
+            }
+            },
+            tooltip: {
+            trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+            },
+            legend: {
+            data: ['一队', '二队', '三队']
+            },
+            grid: {
+            left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+            },
+            xAxis: {
+            show: true,
+                    type: 'value',
+                    axisLine: { show: true },
+            },
+            yAxis: {
+            type: 'category',
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月']
+            },
+            series: [
+            {
+            name: '一队',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                    show: true,
+                            position: 'insideRight'
+                    },
+                    data: [320, 302, 301, 334, 390, 330, 320, 110, 356]
+            },
+            {
+            name: '二队',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                    show: true,
+                            position: 'insideRight'
+                    },
+                    data: [120, 132, 101, 134, 90, 230, 210, 111, 222]
+            },
+            {
+            name: '三队',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                    show: true,
+                            position: 'insideRight'
+                    },
+                    data: [220, 182, 191, 234, 290, 330, 310, 333, 444]
+            }
+            ]
+    };
+    myChartFour.setOption(optionFour);
+    </script>
+    </body>
+</html>
+
+

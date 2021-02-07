@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="media/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-table.css">
+        <link href="media/css/jquery-confirm.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="media/css/bootstrap-select.css">
+        <link href="media/css/style2.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/roomManage.css">
+        <script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-table-zh-CN.js"></script>
+        <script src="media/js/app.js"></script>  
+        <script src="media/js/myjs.js" type="text/javascript"></script>
+        <script src="media/js/jquery-confirm.min.js" type="text/javascript"></script>
+        <script src="media/js/bootstrap-select.js"></script>
+        <title>录音管理</title>
+    </head>
+    <body>    
+        <main>
+
+            <div class="search">
+                <input type="text" placeholder="请输入房间号等信息" class="room form-control" id="key">
+                <label class="inquiry" onclick="searchByKey()" style="cursor: pointer;"><img src="img/fdj.png" alt=""> 搜索</label>
+            </div>
+
+            <div class="container mytable">
+                <div class="row" style="margin-left: -4%;width: 105%"><table id="data_list" class="table table-striped table-bordered table-hover table-full-width"></table></div>
+            </div>    
+        </main>
+
+
+        <script>
+
+            var edit_id;
+            var action;
+            $(function () {
+                initTable();
+            });
+            //初始化表格
+            function initTable() {
+                $('#data_list').bootstrapTable('removeAll');
+                $('#data_list').bootstrapTable({
+                    locale: 'zh-CN',
+                    pagination: true, //分页功能
+                    pageNumber: 1, //初始页面
+                    pageSize: 12, //每页行数
+                    pageList: [12],
+                    smartDisplay: true,
+                    clickToSelect: true, //是否启用点击选中行
+                    sidePagination: "server", //后台分页
+                    method: 'get',
+                    url: 'QueryDataServlet',
+                    dataField: 'data',
+                    queryParams: queryParams, //传给后台的查询参数
+                    responseHandler: responseHandler, //查询成功后执行方法
+                    columns: [
+                        {
+                            title: '序号', //标题  可不加  
+                            formatter: function (value, row, index) {
+                                return index + 1;
+                            }
+                        },
+                        {title: '设备编号',
+                            align: 'center',
+                            field: 'device_id'},
+                        {title: '房间编号',
+                            align: 'center',
+                            field: 'room_id'},
+                        {title: '设备状态',
+                            align: 'center',
+                            field: 'record_state',
+                            formatter: status
+                        },
+                        {title: '操作',
+                            align: 'center',
+                            field: 'record_state',
+                            width: '20%',
+                            formatter: function (value, row, index) {
+                                //图片名称
+                                var img_path = 'audio.png';
+                                var offon = 0;
+                                //运行状态
+                                if (value == 0) {
+                                    img_path = "audio_play.png";
+                                    offon = 1;
+                                } else {
+                                    img_path = "audio.png";
+                                    offon = 0;
+                                }
+                                return '<span id="act_' + row.id + '"><img src="img/' +img_path+ '" alt="" style="cursor: pointer;width:24px;" class="audiopic" id="'+ row.id + '" onclick="isTurn(' + offon +',' +row.id + ')"></span>';
+                            }}]
+                });
+            }
+            
+             function status(value, row, index) {
+                if (value == "0") {
+                    return "工作";
+                } else if (value == "1") {
+                    return "停止";
+                } else {
+                    return 
+                }
+            }
+            
+            function palyAudio(id) {
+                editId = id;
+                
+                $(".audiopic").each(function () {
+                    if ($(this).attr("id") == editId) {
+                        if ($(this).attr("src") == "img/download.png") {
+                            $(this).attr("src", "img/audio.png");
+                            
+                        
+                        } else {
+                            $(this).attr("src", "img/download.png");
+                            turnOn = 0;
+                        }
+                        
+                    }
+                });
+
+                var params = {};
+                var item = {};
+                var url = "";
+                params.sid = 'get_device';
+                params.condition = "id = " + editId;
+                url = "QueryDataServlet";
+                params.data = JSON.stringify(item);
+                $.post(url, params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    // console.log(data);
+                    if (data.code == 0) {
+                        console.log(data.result.data[0].work_status);
+                        if(data.result.data[0].work_status=="1"){
+                            isTurn(0,id);
+                        }else{
+                            isTurn(1,id);
+                        }
+                    } else {
+                        $.alert({
+                            title: "提示",
+                            content: data.info
+                        });
+                    }
+                });
+
+                
+            }
+
+            //请求成功方法
+            function responseHandler(mdata) {
+                var errcode = mdata.code;//在此做了错误代码的判断
+                //                alert(JSON.stringify(mdata));
+                if (errcode != 0) {
+                    $.alert({
+                        title: '告警',
+                        content: "对不起，获取数据失败！",
+                    });
+                    return;
+                }
+
+                sessionStorage.items = JSON.stringify(mdata.result.data);
+                console.log(sessionStorage.items);
+                //如果没有错误则返回数据，渲染表格
+                return {
+                    total: mdata.result.total, //总页数,前面的key必须为"total"
+                    data: mdata.result.data //行数据，前面的key要与之前设置的dataField的值一致.
+                };
+            }
+
+
+            //根据关键字查询
+            function searchByKey() {
+                $('#data_list').bootstrapTable('removeAll');
+                $('#data_list').bootstrapTable("refresh");
+            }
+            //请求服务数据时所传参数
+            function queryParams(params) {
+                //获取查询关键字
+                var key = document.getElementById("key").value;
+                if (key != "" && key != undefined && key != null) {
+                    key = key.trim();
+                }
+                //返回查询参数
+                return{
+                    //每页多少条数据
+                    rows: params.limit,
+                    //请求第几页
+                    page: params.pageNumber,
+                    sid: "get_device",
+                    order: "id",
+                    desc: "true",
+                    key: key
+                }
+            }
+            
+            function isTurn(turnOn,id){
+                editId = id;
+                var params = {};
+                var item = {};
+                var url = "";
+                params.sid = 'update_device';
+                 params.condition = "id = " + editId;
+                url = "UpdateDataServlet";
+                item.record_state = turnOn;
+                params.data = JSON.stringify(item);
+                $.post(url, params, function (mdata) {
+                    var data = JSON.parse(mdata);
+                    if (data.code == 0) {
+                        
+                        // //刷新表格数据
+                        $('#data_list').bootstrapTable("removeAll");
+                        $('#data_list').bootstrapTable("refresh");
+                    } else {
+                        $.alert({
+                            title: "提示",
+                            content: data.info
+                        });
+                    }
+                });
+
+            }
+
+
+            
+
+        </script>
+
+    </body>
+</html>
+
+
+
+

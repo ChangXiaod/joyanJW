@@ -1,0 +1,65 @@
+body{
+    background: #F0F0F0;
+    height: 100%;
+    padding-top: 19px;
+    overflow: hidden;
+    width: 100%;
+}
+
+main{
+    background: #F0F0F0;
+    padding-left:108px;
+}
+
+.echartsbox{
+    width: 93%;
+    height: 745px;
+    padding-left: 10px;
+    background: rgba(232, 237, 244, 1);
+}
+
+.header{
+    width: 1705px;
+    height: 82px;
+    margin-bottom: 20px;
+}
+
+.num{
+    width: 543px;
+    height: 80px;
+    padding-left: 23px;
+    border-radius: 5px;
+    background:rgba(55, 162, 218, 1);
+    position: relative;
+    float: left;
+    margin-right: 14px;
+    margin-bottom: 10px;
+}
+
+.num p{
+    
+font-size: 14px;
+font-family: Microsoft YaHei;
+font-weight: bold;
+color: #FFFFFF;
+padding-top: 15px;
+padding-bottom: 10px;
+}
+
+.num span{
+    
+font-size: 20px;
+font-family: Microsoft YaHei;
+font-weight: bold;
+color: #FFFFFF;
+}
+
+.num img{
+    position: absolute;
+    right: 25px;top: 30px;
+}
+
+.echartsform{
+    width: 1705px;
+    height: 851px;
+}
